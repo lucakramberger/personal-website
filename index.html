@@ -1,1233 +1,425 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Luca Kramberger – Mobile App Developer (Flutter)</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Portfolio of Luca Kramberger – Mobile App Developer (Flutter), specialized in cross-platform apps with Flutter & Dart."
-    />
-
-    <!-- Google Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-
-    <style>
-      :root {
-        --bg: #050509;
-        --bg-alt: #10101a;
-        --bg-card: #131320;
-        --accent: #ff3366;
-        --accent-soft: rgba(255, 51, 102, 0.18);
-        --text: #f5f5f7;
-        --text-muted: #a3a3b3;
-        --border-subtle: rgba(255, 255, 255, 0.08);
-        --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
-        --radius-xl: 24px;
-        --transition-fast: 180ms ease-out;
-        --transition-med: 260ms ease-out;
-        --max-width: 1080px;
-      }
-
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      html {
-        scroll-behavior: smooth;
-        min-height: 100%;
-        height: 100%;
-      }
-
-      body {
-        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
-          sans-serif;
-        color: var(--text);
-        min-height: 100vh;
-        line-height: 1.6;
-        -webkit-font-smoothing: antialiased;
-        padding: 24px;
-      }
-
-      body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -2;
-        background: radial-gradient(
-            circle at top left,
-            rgba(255, 51, 102, 0.12),
-            transparent 50%
-          ),
-          radial-gradient(
-            circle at bottom right,
-            rgba(102, 153, 255, 0.12),
-            transparent 55%
-          ),
-          #050509;
-      }
-
-      body::after {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -3;
-        background: radial-gradient(circle at top left, #191933 0, #050509 40%);
-      }
-
-      /* Layout */
-
-      .page {
-        max-width: var(--max-width);
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 260px minmax(0, 1fr);
-        gap: 28px;
-      }
-
-      @media (max-width: 1840px) {
-        body {
-          padding: 16px;
-        }
-
-        .page {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      /* Sidebar */
-
-      .sidebar {
-        position: sticky;
-        top: 18px;
-        align-self: flex-start;
-        background: linear-gradient(145deg, #151524, #0a0a12);
-        border-radius: var(--radius-xl);
-        border: 1px solid var(--border-subtle);
-        box-shadow: var(--shadow-soft);
-        padding: 22px 22px 18px;
-        overflow: hidden;
-      }
-
-      .sidebar::before {
-        content: "";
-        position: absolute;
-        inset: -40%;
-        background: conic-gradient(
-          from 210deg,
-          rgba(255, 51, 102, 0.3),
-          rgba(123, 97, 255, 0.25),
-          rgba(51, 255, 194, 0.1),
-          rgba(255, 51, 102, 0.3)
-        );
-        opacity: 0.12;
-        filter: blur(28px);
-        z-index: -1;
-        animation: spinGlow 28s linear infinite;
-      }
-
-      @keyframes spinGlow {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      .sidebar-header {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        margin-bottom: 18px;
-      }
-
-      .avatar {
-        width: 92px;
-        height: 92px;
-        border-radius: 18px;
-        background: radial-gradient(
-          circle at 30% 20%,
-          #ffffff,
-          #ffb3c7 35%,
-          #ff3366 70%,
-          #100915 100%
-        );
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 22px;
-        color: #1a0810;
-        overflow: hidden;
-      }
-
-      .avatar img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 18px;
-      }
-
-      .sidebar-title h1 {
-        font-size: 30px;
-        font-weight: 600;
-        line-height: 1.25;
-        letter-spacing: 0.02em;
-      }
-
-      .sidebar-title p {
-        font-size: 20px;
-        line-height: 1.1;
-        color: var(--text-muted);
-      }
-
-      .sidebar-contact {
-        margin-bottom: 18px;
-        font-size: 13px;
-        color: var(--text-muted);
-      }
-
-      .sidebar-contact p + p {
-        margin-top: 4px;
-      }
-
-      .sidebar-contact a {
-        color: var(--text);
-        text-decoration: none;
-        border-bottom: 1px dotted rgba(255, 255, 255, 0.35);
-        transition: border-color var(--transition-fast),
-          color var(--transition-fast);
-      }
-
-      .sidebar-contact a:hover {
-        color: var(--accent);
-        border-color: var(--accent);
-      }
-
-      .sidebar-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-bottom: 18px;
-      }
-
-      .badge {
-        font-size: 11px;
-        padding: 4px 9px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.09);
-        color: var(--text-muted);
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-      }
-
-      .badge-dot {
-        width: 7px;
-        height: 7px;
-        border-radius: 999px;
-        background: #46d46b;
-        box-shadow: 0 0 0 6px rgba(70, 212, 107, 0.18);
-      }
-
-      .sidebar-nav {
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
-        padding-top: 14px;
-        margin-top: 12px;
-      }
-
-      .sidebar-nav-list {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        font-size: 13px;
-      }
-
-      .sidebar-nav-list button {
-        width: 100%;
-        text-align: left;
-        background: transparent;
-        border-radius: 999px;
-        border: none;
-        padding: 7px 9px;
-        color: var(--text-muted);
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        justify-content: space-between;
-        transition: background-color var(--transition-fast),
-          color var(--transition-fast), transform var(--transition-fast);
-        font-size: 18px;
-      }
-
-      .sidebar-nav-list button span {
-        font-size: 16px;
-        opacity: 0.8;
-      }
-
-      .sidebar-nav-list button:hover {
-        background: rgba(255, 255, 255, 0.04);
-        color: var(--text);
-        transform: translateX(2px);
-      }
-
-      .sidebar-nav-list button.active {
-        background: rgba(255, 51, 102, 0.22);
-        color: var(--text);
-      }
-
-      .sidebar-actions {
-        display: flex;
-        gap: 8px;
-        margin-top: 16px;
-        flex-wrap: wrap;
-      }
-
-      .btn {
-        border-radius: 999px;
-        border: 1px solid transparent;
-        padding: 8px 14px;
-        font-size: 13px;
-        font-weight: 500;
-        letter-spacing: 0.01em;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        transition: transform var(--transition-fast),
-          box-shadow var(--transition-fast),
-          background-color var(--transition-fast),
-          border-color var(--transition-fast), color var(--transition-fast);
-        white-space: nowrap;
-      }
-
-      .btn-primary {
-        background: linear-gradient(135deg, #ff3366, #ff7a5c);
-        color: #050509;
-        box-shadow: 0 12px 30px rgba(255, 51, 102, 0.5);
-      }
-
-      .btn-primary:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 18px 38px rgba(255, 51, 102, 0.65);
-      }
-
-      .btn-ghost {
-        background: rgba(255, 255, 255, 0.03);
-        color: var(--text-muted);
-        border-color: rgba(255, 255, 255, 0.18);
-      }
-
-      .btn-ghost:hover {
-        color: var(--text);
-        background: rgba(255, 255, 255, 0.06);
-        border-color: rgba(255, 255, 255, 0.25);
-      }
-
-      .btn-icon {
-        font-size: 15px;
-        line-height: 0;
-      }
-
-      @media (max-width: 840px) {
-        .sidebar {
-          position: static;
-          border-radius: 20px;
-        }
-
-        .sidebar-header {
-          margin-bottom: 12px;
-        }
-      }
-
-      /* Main content */
-
-      main {
-        border-radius: var(--radius-xl);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        background: linear-gradient(
-          135deg,
-          rgba(16, 16, 32, 0.98),
-          rgba(6, 6, 16, 0.98)
-        );
-        padding: 26px 26px 34px;
-        box-shadow: var(--shadow-soft);
-        position: relative;
-        overflow: hidden;
-      }
-
-      main::before {
-        content: "";
-        position: absolute;
-        inset: -30%;
-        background: radial-gradient(
-            circle at top right,
-            rgba(255, 255, 255, 0.08),
-            transparent 55%
-          ),
-          radial-gradient(
-            circle at bottom left,
-            rgba(255, 51, 102, 0.18),
-            transparent 60%
-          );
-        opacity: 0.7;
-        mix-blend-mode: soft-light;
-        pointer-events: none;
-      }
-
-      .content-inner {
-        position: relative;
-        z-index: 1;
-      }
-
-      section {
-        margin-bottom: 36px;
-        position: relative;
-      }
-
-      section:last-of-type {
-        margin-bottom: 0;
-      }
-
-      .section-label {
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.18em;
-        color: var(--accent);
-        margin-bottom: 6px;
-      }
-
-      .section-title {
-        font-size: 20px;
-        font-weight: 600;
-        margin-bottom: 14px;
-      }
-
-      .pill-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        font-size: 12px;
-        color: var(--text-muted);
-        margin-bottom: 12px;
-      }
-
-      /* Hero */
-
-      .hero {
-        margin-bottom: 30px;
-      }
-
-      .hero-title {
-        font-size: 28px;
-        line-height: 1.2;
-        margin-bottom: 8px;
-      }
-
-      .hero-title span {
-        color: var(--accent);
-      }
-
-      .hero-subtitle {
-        font-size: 15px;
-        color: var(--text-muted);
-        max-width: 640px;
-        margin-bottom: 16px;
-      }
-
-      .hero-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-bottom: 18px;
-      }
-
-      .tag {
-        font-size: 11px;
-        padding: 4px 10px;
-        border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: rgba(0, 0, 0, 0.2);
-        color: var(--text-muted);
-      }
-
-      .hero-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.5fr);
-        gap: 14px;
-      }
-
-      @media (max-width: 720px) {
-        .hero-title {
-          font-size: 24px;
-        }
-
-        .hero-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      .hero-card {
-        border-radius: 20px;
-        background: radial-gradient(
-          circle at top left,
-          rgba(255, 255, 255, 0.03),
-          #151526
-        );
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 14px 16px;
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
-        transition: transform var(--transition-med),
-          box-shadow var(--transition-med), border-color var(--transition-med),
-          background var(--transition-med);
-      }
-
-      .hero-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 24px 50px rgba(0, 0, 0, 0.85);
-        border-color: rgba(255, 255, 255, 0.16);
-        background: radial-gradient(
-          circle at top left,
-          rgba(255, 255, 255, 0.05),
-          #18182a
-        );
-      }
-
-      .hero-card::before {
-        content: "";
-        position: absolute;
-        inset: -40%;
-        background: radial-gradient(
-          circle at top left,
-          rgba(255, 51, 102, 0.17),
-          transparent 60%
-        );
-        opacity: 0;
-        transition: opacity var(--transition-med);
-        pointer-events: none;
-      }
-
-      .hero-card:hover::before {
-        opacity: 1;
-      }
-
-      .hero-card h3 {
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        margin-bottom: 8px;
-        color: var(--text-muted);
-      }
-
-      .hero-card p {
-        font-size: 13px;
-        color: var(--text-muted);
-      }
-
-      .hero-meta-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
-        font-size: 12px;
-      }
-
-      .hero-meta-item {
-        padding: 8px 9px;
-        border-radius: 14px;
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        background: rgba(0, 0, 0, 0.25);
-        color: var(--text-muted);
-      }
-
-      .hero-meta-label {
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-        opacity: 0.7;
-        margin-bottom: 2px;
-      }
-
-      .hero-meta-value {
-        font-size: 12px;
-        color: var(--text);
-      }
-
-      /* Experience */
-
-      .timeline {
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-      }
-
-      .timeline-item {
-        display: grid;
-        grid-template-columns: 120px minmax(0, 1fr);
-        gap: 16px;
-        align-items: flex-start;
-        font-size: 13px;
-      }
-
-      @media (max-width: 680px) {
-        .timeline-item {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      .timeline-time {
-        color: var(--text-muted);
-        font-size: 12px;
-        padding-top: 4px;
-      }
-
-      .timeline-card {
-        border-radius: 18px;
-        background: rgba(8, 8, 20, 0.96);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 12px 14px;
-        position: relative;
-        overflow: hidden;
-        transition: transform var(--transition-med),
-          box-shadow var(--transition-med), border-color var(--transition-med),
-          background var(--transition-med);
-      }
-
-      .timeline-card::before {
-        content: "";
-        position: absolute;
-        width: 5px;
-        inset-block: 12px;
-        left: 0;
-        border-radius: 0 999px 999px 0;
-        background: linear-gradient(180deg, var(--accent), #ffb86c);
-        opacity: 0.6;
-      }
-
-      .timeline-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.9);
-        border-color: rgba(255, 255, 255, 0.12);
-        background: rgba(14, 14, 30, 0.98);
-      }
-
-      .timeline-role {
-        font-weight: 600;
-        margin-bottom: 2px;
-      }
-
-      .timeline-company {
-        font-size: 12px;
-        color: var(--text-muted);
-        margin-bottom: 8px;
-      }
-
-      .timeline-bullets {
-        list-style: none;
-        display: grid;
-        gap: 4px;
-      }
-
-      .timeline-bullets li {
-        position: relative;
-        padding-left: 14px;
-        color: var(--text-muted);
-      }
-
-      .timeline-bullets li::before {
-        content: "•";
-        position: absolute;
-        left: 0;
-        top: 1px;
-        color: var(--accent);
-        font-size: 12px;
-      }
-
-      /* Skills */
-
-      .skills-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
-        gap: 16px;
-      }
-
-      @media (max-width: 720px) {
-        .skills-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      .skills-card {
-        border-radius: 18px;
-        background: rgba(8, 8, 20, 0.96);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 12px 14px;
-      }
-
-      .skills-card h3 {
-        font-size: 14px;
-        margin-bottom: 6px;
-      }
-
-      .skills-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        margin-top: 4px;
-      }
-
-      .chip {
-        font-size: 11px;
-        padding: 4px 9px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.09);
-        color: var(--text-muted);
-      }
-
-      .skills-soft-list {
-        list-style: none;
-        font-size: 13px;
-        color: var(--text-muted);
-        display: grid;
-        gap: 4px;
-        margin-top: 2px;
-      }
-
-      /* Education & Languages */
-
-      .education-card,
-      .languages-card {
-        border-radius: 18px;
-        background: rgba(8, 8, 20, 0.96);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 12px 14px;
-        font-size: 13px;
-        color: var(--text-muted);
-      }
-
-      .education-title {
-        font-weight: 600;
-        color: var(--text);
-        margin-bottom: 2px;
-      }
-
-      .education-meta {
-        font-size: 12px;
-        margin-bottom: 6px;
-      }
-
-      .education-list {
-        list-style: none;
-        display: grid;
-        gap: 4px;
-      }
-
-      /* Contact footer */
-
-      .contact-footer {
-        margin-top: 10px;
-        padding-top: 16px;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 10px;
-        justify-content: space-between;
-        font-size: 12px;
-        color: var(--text-muted);
-      }
-
-      .contact-footer a {
-        color: var(--accent);
-        text-decoration: none;
-      }
-
-      /* Scroll reveal */
-
-      .reveal {
-        opacity: 0;
-        transform: translateY(10px);
-        filter: blur(2px);
-        transition: opacity 520ms ease-out, transform 520ms ease-out,
-          filter 520ms ease-out;
-      }
-
-      .reveal.in-view {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-      }
-
-      /* Back to top */
-
-      .back-to-top {
-        position: fixed;
-        right: 18px;
-        bottom: 18px;
-        width: 38px;
-        height: 38px;
-        border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: rgba(5, 5, 12, 0.9);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 18px;
-        color: var(--text-muted);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65);
-        opacity: 0;
-        transform: translateY(12px);
-        pointer-events: none;
-        transition: opacity var(--transition-med),
-          transform var(--transition-med);
-        z-index: 50;
-      }
-
-      .back-to-top.visible {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="page">
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        <div class="sidebar-header">
-          <div class="avatar">
-            <img src="avatar.JPG" alt="LK" />
-          </div>
-          <div class="sidebar-title">
-            <h1>Luca Kramberger</h1>
-            <p>Mobile App Developer (Flutter)</p>
-          </div>
-        </div>
-
-        <div class="sidebar-contact">
-          <p><strong>Location:</strong> Graz, Austria</p>
-          <p>
-            <strong>E-mail:</strong>
-            <a href="mailto:luca.kramberger@gmail.com"
-              >luca.kramberger@gmail.com</a
-            >
-          </p>
-          <p><strong>Date of birth:</strong> 25.08.2003</p>
-          <p><strong>Nationality:</strong> Austrian</p>
-        </div>
-
-        <div class="sidebar-meta">
-          <span class="badge">
-            <span class="badge-dot"></span>
-            Open for opportunities
-          </span>
-          <span class="badge">Mobile &amp; Flutter</span>
-          <span class="badge">Early-stage products</span>
-        </div>
-
-        <div class="sidebar-actions">
-          <a class="btn btn-primary" href="mailto:luca.kramberger@gmail.com">
-            <span>Contact me</span> <span class="btn-icon">✉️</span>
-          </a>
-          <a
-            class="btn btn-ghost"
-            href="Luca_Kramberger_CV.pdf"
-            download="Luca_Kramberger_CV.pdf"
-          >
-            Download CV
-          </a>
-        </div>
-      </aside>
-
-      <!-- Main content -->
-      <main>
-        <div class="content-inner">
-          <!-- Hero / Profile -->
-          <section id="about" class="hero reveal">
-            <div class="section-label">Profile</div>
-            <h2 class="hero-title">
-              I build <span>cross-platform apps</span> with Flutter – from
-              prototype to production.
-            </h2>
-            <p class="hero-subtitle">
-              Mobile developer specialized in Flutter/Dart with strong
-              experience in early-stage product teams. I build apps for iOS,
-              Android, web and desktop end-to-end – including integrations,
-              testing and monitoring. I’m used to working in small teams, taking
-              ownership, and shipping reliable, high-quality apps.
-            </p>
-
-            <div class="hero-tags">
-              <span class="tag">Flutter &amp; Dart</span>
-              <span class="tag">Supabase &amp; Firebase</span>
-              <span class="tag">Stripe &amp; Mapbox</span>
-              <span class="tag">Event platforms &amp; Web3</span>
-            </div>
-
-            <div class="hero-grid">
-              <div class="hero-card">
-                <h3>What I like to work on</h3>
-                <p>
-                  Cross-platform apps that feel native and polished, with solid
-                  architecture and clean APIs: authentication, payments,
-                  real-time features, maps, and everything needed to ship a
-                  production-ready product.
-                </p>
-              </div>
-              <div class="hero-card">
-                <h3>Snapshot</h3>
-                <div class="hero-meta-grid">
-                  <div class="hero-meta-item">
-                    <div class="hero-meta-label">Experience</div>
-                    <div class="hero-meta-value">3+ years hands-on</div>
-                  </div>
-                  <div class="hero-meta-item">
-                    <div class="hero-meta-label">Current focus</div>
-                    <div class="hero-meta-value">CU Development GmbH</div>
-                  </div>
-                  <div class="hero-meta-item">
-                    <div class="hero-meta-label">Location</div>
-                    <div class="hero-meta-value">Graz, AT</div>
-                  </div>
-                  <div class="hero-meta-item">
-                    <div class="hero-meta-label">Stack</div>
-                    <div class="hero-meta-value">
-                      Flutter · Supabase · Firebase
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- Experience -->
-          <section id="experience" class="reveal">
-            <div class="section-label">Experience</div>
-            <h2 class="section-title">Professional Experience</h2>
-
-            <div class="timeline">
-              <article class="timeline-item">
-                <div class="timeline-time">11/2021 – Present<br />Graz</div>
-                <div class="timeline-card">
-                  <div class="timeline-role">
-                    Project Manager &amp; Flutter Team Lead
-                  </div>
-                  <div class="timeline-company">
-                    CU Development GmbH – Social-first event platform
-                  </div>
-                  <ul class="timeline-bullets">
-                    <li>
-                      Lead Flutter development of a social-first event platform
-                      (mobile &amp; web).
-                    </li>
-                    <li>
-                      Design app architecture and state management using BLoC
-                      and hydrated_bloc.
-                    </li>
-                    <li>
-                      Implement authentication with Supabase (PostgreSQL, Auth,
-                      Realtime) including e-mail and social logins (Google,
-                      Apple, Facebook).
-                    </li>
-                    <li>
-                      Integrate Stripe and Stripe Connect for in-app payments
-                      and secure payouts.
-                    </li>
-                    <li>
-                      Use Firebase (Push Notifications, App Check) and Sentry
-                      for security, engagement and monitoring.
-                    </li>
-                    <li>
-                      Build custom Mapbox interactive maps and deep
-                      linking/navigation with GoRouter.
-                    </li>
-                  </ul>
-                </div>
-              </article>
-
-              <article class="timeline-item">
-                <div class="timeline-time">04/2023 – 06/2025<br />Graz</div>
-                <div class="timeline-card">
-                  <div class="timeline-role">Flutter/Dart App Engineer</div>
-                  <div class="timeline-company">
-                    VouGee GmbH – Web3 crypto exchange
-                  </div>
-                  <ul class="timeline-bullets">
-                    <li>
-                      Further development of a Web3 crypto exchange built in
-                      Flutter/Dart.
-                    </li>
-                    <li>
-                      Implemented end-to-end encrypted chat using a Matrix-style
-                      architecture.
-                    </li>
-                    <li>
-                      Developed wallet and transaction flows and improved UX for
-                      complex crypto actions.
-                    </li>
-                    <li>
-                      Built reusable, responsive UI components using the
-                      internal design system.
-                    </li>
-                    <li>
-                      Integrated and maintained realtime push notifications
-                      (Firebase).
-                    </li>
-                  </ul>
-                </div>
-              </article>
-            </div>
-          </section>
-
-          <!-- Skills -->
-          <section id="skills" class="reveal">
-            <div class="section-label">Skills</div>
-            <h2 class="section-title">Technologies &amp; Soft Skills</h2>
-
-            <div class="skills-grid">
-              <div class="skills-card">
-                <h3>Technologies &amp; Tools</h3>
-                <div class="skills-list">
-                  <span class="chip">Flutter (mobile, web, desktop)</span>
-                  <span class="chip">Dart</span>
-                  <span class="chip"
-                    >Supabase (PostgreSQL, Auth, Realtime)</span
-                  >
-                  <span class="chip">SQL</span>
-                  <span class="chip">REST APIs</span>
-                  <span class="chip"
-                    >Firebase (Push Notifications, App Check)</span
-                  >
-                  <span class="chip">Stripe &amp; Stripe Connect</span>
-                  <span class="chip">Sentry</span>
-                  <span class="chip">Mapbox</span>
-                  <span class="chip">HTML &amp; CSS</span>
-                  <span class="chip">JavaScript / TypeScript</span>
-                  <span class="chip">Java</span>
-                  <span class="chip">Python</span>
-                  <span class="chip">VMware &amp; VirtualBox</span>
-                  <span class="chip">MS Office</span>
-                </div>
-              </div>
-
-              <div class="skills-card">
-                <h3>Soft Skills</h3>
-                <ul class="skills-soft-list">
-                  <li>
-                    Clear communication with technical and non-technical
-                    stakeholders.
-                  </li>
-                  <li>
-                    Experience coordinating a small dev team while staying
-                    hands-on.
-                  </li>
-                  <li>
-                    Strong ownership mindset and structured way of working.
-                  </li>
-                  <li>Curious problem-solver and fast learner.</li>
-                  <li>Focus on polished UX and reliable delivery.</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <!-- Education & Languages -->
-          <section id="education" class="reveal">
-            <div class="section-label">Background</div>
-            <h2 class="section-title">Education &amp; Languages</h2>
-
-            <div class="pill-row">
-              <span
-                >Formal software engineering background &amp; hands-on product
-                experience.</span
-              >
-            </div>
-
-            <div
-              style="
-                display: grid;
-                gap: 16px;
-                grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-              "
-            >
-              <div class="education-card">
-                <div class="education-title">
-                  HTL Leoben – Higher Technical College, Software Engineering
-                  &amp; Planning
-                </div>
-                <div class="education-meta">09/2017 – 07/2022</div>
-                <ul class="education-list">
-                  <li>
-                    Degree: Matura (Austrian A-level equivalent; Reife- und
-                    Diplomprüfung).
-                  </li>
-                  <li>
-                    Focus on software development, planning and project work.
-                  </li>
-                </ul>
-              </div>
-
-              <div class="languages-card">
-                <strong>Languages</strong>
-                <ul class="education-list" style="margin-top: 6px">
-                  <li>German: Native</li>
-                  <li>English: B2 (confident in technical communication)</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <!-- Contact -->
-          <section id="contact" class="reveal">
-            <div class="section-label">Contact</div>
-            <h2 class="section-title">Let’s talk</h2>
-            <p
-              style="
-                max-width: 520px;
-                color: var(--text-muted);
-                font-size: 14px;
-                margin-bottom: 16px;
-              "
-            >
-              If you’re looking for someone to build or extend a Flutter-based
-              product, I’d be happy to talk. I’m used to taking ownership,
-              working closely with product &amp; design, and iterating quickly.
-            </p>
-
-            <div
-              style="
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-                align-items: center;
-                margin-bottom: 10px;
-              "
-            >
-              <a
-                class="btn btn-primary"
-                href="mailto:luca.kramberger@gmail.com"
-              >
-                ✉️ Write me an e-mail
-              </a>
-            </div>
-
-            <p style="font-size: 13px; color: var(--text-muted)">
-              Or connect via e-mail and we can schedule a short call or live
-              coding session.
-            </p>
-          </section>
-
-          <div class="contact-footer">
-            <span
-              >© <span id="year"></span> – Built with Flutter in mind, coded in
-              HTML/CSS.</span
-            >
-            <span
-              >Graz, Austria ·
-              <a href="mailto:luca.kramberger@gmail.com"
-                >luca.kramberger@gmail.com</a
-              ></span
-            >
-          </div>
-        </div>
-      </main>
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Luca Kramberger · Apps, Websites und KI-Kurse aus Graz</title>
+  <meta name="description" content="Luca Kramberger, Softwareentwickler aus Graz. Apps für iOS und Android, Websites, interne Tools und individuelle KI-Kurse für Teams.">
+  <meta property="og:title" content="Luca Kramberger · Softwareentwicklung aus Graz">
+  <meta property="og:description" content="Apps für iOS und Android, Websites, interne Tools und individuelle KI-Kurse für Teams.">
+  <meta property="og:image" content="luca.jpg">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Figtree:wght@400;500;600;700&display=swap">
+
+  <style>
+    :root {
+      --paper: #F4EFE6;
+      --paper-2: #EBE3D6;
+      --ink: #1B1713;
+      --muted: #6B6255;
+      --accent: #1E3BC8;
+      --line: rgba(27, 23, 19, .18);
+      --line-soft: rgba(27, 23, 19, .1);
+      --line-strong: rgba(27, 23, 19, .25);
+      --serif: Fraunces, Georgia, "Times New Roman", serif;
+      --sans: Figtree, system-ui, -apple-system, "Segoe UI", sans-serif;
+      --wrap: 1180px;
+      --gutter: 40px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    img { max-width: 100%; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    .wrap { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+    .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+    .serif { font-family: var(--serif); }
+    em.accent, .accent { color: var(--accent); }
+    .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 40px; }
+    .muted { color: var(--muted); }
+
+    /* Buttons */
+    .btn { display: inline-flex; justify-content: center; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; font-size: 16px; padding: 15px 26px; border-radius: 999px; border: 1px solid var(--line-strong); transition: background .18s ease, transform .18s ease; }
+    .btn:hover { background: var(--paper-2); }
+    .btn-primary { background: var(--accent); border-color: var(--accent); color: #FFFFFF; }
+    .btn-primary:hover { background: #1830A8; }
+    .pill { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; border: 1px solid var(--line-strong); border-radius: 999px; padding: 12px 20px; font-weight: 500; }
+    .pill:hover { background: var(--paper-2); }
+
+    /* Header */
+    .site-header { position: sticky; top: 0; z-index: 10; background: var(--paper); border-bottom: 1px solid rgba(27,23,19,.12); }
+    .site-header .wrap { height: 72px; display: flex; align-items: center; gap: 28px; }
+    .logo { font-family: var(--serif); font-size: 21px; font-weight: 700; text-decoration: none; letter-spacing: -.02em; }
+    .nav { margin-left: auto; display: flex; align-items: center; gap: 28px; font-size: 15px; }
+    .nav a { text-decoration: none; color: var(--muted); }
+    .nav a:hover { color: var(--ink); }
+    .nav a.strong { color: var(--ink); font-weight: 600; }
+    .menu-btn { display: none; margin-left: auto; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; padding: 0 12px; background: none; border: 1px solid rgba(27,23,19,.2); border-radius: 999px; cursor: pointer; }
+    .menu-btn span { display: block; height: 1.5px; background: var(--ink); transition: transform .2s ease; }
+    .menu-btn[aria-expanded="true"] span:first-child { transform: translateY(3.25px) rotate(45deg); }
+    .menu-btn[aria-expanded="true"] span:last-child { transform: translateY(-3.25px) rotate(-45deg); }
+
+    /* Hero */
+    .hero { padding-top: 44px; padding-bottom: 72px; }
+    .hero-top { display: flex; justify-content: space-between; gap: 24px; padding-bottom: 14px; border-bottom: 1px solid var(--ink); }
+    .hero-grid { gap: 56px; align-items: center; margin-top: 56px; }
+    .hero-text { grid-column: span 7; }
+    .hero h1 { margin: 0; font-family: var(--serif); font-size: clamp(58px, 8.2vw, 118px); line-height: .86; letter-spacing: -.035em; font-weight: 800; font-variation-settings: "opsz" 144; }
+    .hero h1 span { display: block; }
+    .hero h1 .accent { font-style: italic; font-weight: 600; }
+    .hero .lead { margin: 26px 0 0; font-size: 20px; color: var(--muted); max-width: 34ch; }
+    .hero .lead strong { color: var(--ink); font-weight: 600; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .portrait { grid-column: span 5; position: relative; }
+    .portrait::before { content: ""; position: absolute; top: 22px; right: -20px; bottom: -20px; left: 22px; background: var(--accent); border-radius: 2px; }
+    .portrait figure { position: relative; margin: 0; overflow: hidden; border-radius: 2px; background: var(--paper-2); }
+    .portrait img { display: block; width: 100%; height: 520px; object-fit: cover; object-position: 50% 14%; }
+    .portrait figcaption { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; gap: 12px; padding: 14px 16px; font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: #FFFFFF; background: rgba(12,10,8,.55); }
+    .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin: 60px 0 0; padding-top: 24px; border-top: 1px solid var(--line); }
+    .facts dt { font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+    .facts dd { margin: 6px 0 0; font-size: 18px; font-weight: 600; }
+
+    /* Section heads */
+    .section { padding-top: 96px; padding-bottom: 96px; }
+    .section-head { align-items: baseline; margin-bottom: 44px; }
+    .section-head .eyebrow { grid-column: span 3; }
+    .section-head h2 { grid-column: span 9; margin: 0; font-family: var(--serif); font-size: clamp(34px, 4.4vw, 52px); line-height: 1.02; letter-spacing: -.025em; font-weight: 700; text-wrap: balance; }
+    .section-head h2 em { font-weight: 600; }
+
+    /* Services */
+    #arbeit { padding-top: 24px; }
+    .service { padding: 34px 0; border-top: 1px solid var(--line); }
+    .service:last-child { border-bottom: 1px solid var(--line); }
+    .service .eyebrow { grid-column: span 3; }
+    .service-body { grid-column: span 7; }
+    .service h3 { margin: 0 0 10px; font-family: var(--serif); font-size: 30px; font-weight: 650; letter-spacing: -.02em; line-height: 1.15; }
+    .service p { margin: 0; color: var(--muted); }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; font-size: 14px; color: var(--muted); }
+    .tags span { border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
+    .price { grid-column: span 2; margin: 0; text-align: right; font-family: var(--serif); font-size: 24px; font-weight: 650; line-height: 1.2; }
+    .price small { display: block; font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+
+    /* Quote */
+    .quote { background: var(--paper-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .quote .wrap { padding-top: 86px; padding-bottom: 86px; }
+    .quote blockquote { margin: 0; max-width: 20ch; font-family: var(--serif); font-size: clamp(30px, 4.6vw, 58px); line-height: 1.08; letter-spacing: -.028em; font-weight: 600; text-wrap: balance; }
+    .quote p { margin: 26px 0 0; }
+
+    /* Course */
+    .course-grid { gap: 56px; align-items: start; }
+    .course-main { grid-column: span 7; }
+    .course-main > p { margin: 0 0 22px; color: var(--muted); }
+    .modules { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
+    .modules li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 16px; padding: 16px 0; border-top: 1px solid var(--line-soft); }
+    .modules li:first-child { border-top-color: var(--line); }
+    .modules .num { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--accent); line-height: 1.3; }
+    .modules strong { font-weight: 600; }
+    .modules .desc { display: block; color: var(--muted); font-size: 15px; }
+    .offer { grid-column: span 5; border: 1px solid var(--ink); border-radius: 3px; padding: 34px; }
+    .offer .big { margin: 10px 0 0; font-family: var(--serif); font-size: 50px; line-height: 1; letter-spacing: -.03em; font-weight: 750; }
+    .offer ul { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 10px; color: var(--muted); font-size: 15px; }
+    .offer li { display: flex; gap: 10px; }
+    .offer li::before { content: "—"; color: var(--accent); }
+    .offer .btn { display: flex; margin-top: 26px; }
+
+    /* Person */
+    .bordered { border-top: 1px solid var(--line); }
+    .person-grid { gap: 56px; }
+    .person-text { grid-column: span 6; }
+    .person-text .intro { margin: 0 0 20px; font-family: var(--serif); font-size: 26px; line-height: 1.25; letter-spacing: -.015em; font-weight: 600; max-width: 26ch; }
+    .person-text p { margin: 0 0 15px; color: var(--muted); }
+    .person-text .btn { margin-top: 12px; }
+    .timeline { grid-column: span 6; list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
+    .timeline li { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 18px; padding: 18px 0; border-top: 1px solid var(--line); }
+    .timeline .when { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .timeline strong { display: block; font-family: var(--serif); font-size: 19px; font-weight: 650; line-height: 1.3; }
+    .timeline .what { color: var(--muted); font-size: 15px; }
+
+    /* Contact */
+    #kontakt h2 { margin: 16px 0 0; font-family: var(--serif); font-size: clamp(40px, 6.4vw, 76px); line-height: 1; letter-spacing: -.035em; font-weight: 750; text-wrap: balance; }
+    #kontakt h2 em { font-weight: 600; }
+    #kontakt .lead { margin: 22px 0 0; color: var(--muted); max-width: 46ch; }
+    .mail { display: inline-block; margin-top: 30px; font-size: 24px; font-weight: 500; text-decoration: none; border-bottom: 2px solid var(--accent); padding-bottom: 4px; overflow-wrap: anywhere; }
+    .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
+
+    /* Footer */
+    .site-footer { border-top: 1px solid var(--ink); }
+    .site-footer .wrap { padding-top: 28px; padding-bottom: 28px; display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; align-items: center; font-size: 14px; color: var(--muted); }
+
+    /* Tablet */
+    @media (max-width: 960px) {
+      :root { --gutter: 28px; }
+      .grid { gap: 28px; }
+      .hero-grid, .course-grid, .person-grid { grid-template-columns: minmax(0, 1fr); gap: 48px; }
+      .hero-text, .portrait, .course-main, .offer, .person-text, .timeline { grid-column: 1 / -1; }
+      .portrait { max-width: 520px; margin-right: 20px; }
+      .portrait img { height: 460px; }
+      .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .section-head .eyebrow, .section-head h2 { grid-column: 1 / -1; }
+      .section-head { gap: 12px; }
+      .service .eyebrow { grid-column: 1 / -1; }
+      .service-body { grid-column: span 9; }
+      .price { grid-column: span 3; }
+      .section { padding-top: 72px; padding-bottom: 72px; }
+    }
+
+    /* Mobile */
+    @media (max-width: 720px) {
+      :root { --gutter: 20px; }
+      body { font-size: 16px; }
+      html { scroll-padding-top: 76px; }
+      .site-header .wrap { height: 64px; }
+      .logo { font-size: 18px; }
+      .menu-btn { display: flex; }
+      .nav { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0; padding: 8px var(--gutter) 18px; background: var(--paper); border-bottom: 1px solid var(--line); font-size: 18px; }
+      .nav.open { display: flex; }
+      .nav a { padding: 12px 0; border-bottom: 1px solid var(--line-soft); color: var(--ink); }
+      .nav a:last-child { border-bottom: 0; }
+
+      .hero { padding-top: 26px; padding-bottom: 34px; }
+      .hero-top { font-size: 11px; letter-spacing: .18em; }
+      .hero-top span:last-child { display: none; }
+      .hero-grid { display: flex; flex-direction: column; align-items: stretch; margin-top: 22px; gap: 28px; }
+      .hero .lead { font-size: 18px; margin-top: 4px; }
+      .portrait { order: -1; margin-right: 12px; }
+      .hero-text { display: contents; }
+      .hero h1 { order: -2; }
+      .portrait::before { top: 16px; right: -12px; bottom: -12px; left: 16px; }
+      .portrait img { height: 340px; }
+      .portrait figcaption { font-size: 10px; padding: 12px 14px; }
+      .actions { flex-direction: column; gap: 10px; margin-top: 0; }
+      .actions .btn { padding: 16px 24px; }
+      .facts { margin-top: 32px; gap: 20px 16px; padding-top: 22px; }
+      .facts dt { font-size: 10px; }
+      .facts dd { font-size: 17px; }
+
+      .section { padding-top: 48px; padding-bottom: 48px; }
+      .section-head { margin-bottom: 24px; }
+      #arbeit { padding-top: 10px; }
+      .service { padding: 22px 0; }
+      .service.grid { gap: 8px 16px; }
+      .service .eyebrow { font-size: 11px; }
+      .service-body { grid-column: 1 / -1; order: 2; }
+      .price { grid-column: 1 / -1; order: 1; text-align: left; font-size: 20px; display: flex; align-items: baseline; gap: 10px; }
+      .price small { margin-top: 0; }
+      .service h3 { font-size: 24px; }
+      .service p { font-size: 15px; }
+      .tags { margin-top: 14px; font-size: 13px; }
+
+      .quote .wrap { padding-top: 44px; padding-bottom: 44px; }
+      .quote p { margin-top: 18px; font-size: 11px; }
+
+      .offer { padding: 24px; }
+      .offer .big { font-size: 42px; }
+      .person-text .intro { font-size: 22px; }
+      .timeline li { grid-template-columns: 1fr; gap: 2px; }
+      .mail { font-size: 18px; margin-top: 22px; }
+      .links { margin-top: 24px; gap: 9px; }
+      .pill { padding: 11px 18px; font-size: 15px; }
+      .site-footer .wrap { font-size: 13px; padding-top: 22px; padding-bottom: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a href="#oben" class="logo">Luca <em class="accent">Kramberger</em></a>
+      <button type="button" class="menu-btn" aria-label="Menü öffnen" aria-expanded="false" aria-controls="nav">
+        <span aria-hidden="true"></span><span aria-hidden="true"></span>
+      </button>
+      <nav class="nav" id="nav" aria-label="Hauptnavigation">
+        <a href="#arbeit">Arbeit</a>
+        <a href="#kurs">KI-Kurs</a>
+        <a href="#person">Person</a>
+        <a href="#kontakt" class="strong">Kontakt</a>
+      </nav>
     </div>
+  </header>
 
-    <!-- Back to top button -->
-    <button class="back-to-top" aria-label="Back to top">↑</button>
+  <main>
+    <section id="oben" class="wrap hero">
+      <div class="hero-top eyebrow">
+        <span>Softwareentwicklung · Graz</span>
+        <span>Selbstständig seit 2026</span>
+      </div>
 
-    <script>
-      // Set year
-      document.getElementById("year").textContent = new Date().getFullYear();
+      <div class="grid hero-grid">
+        <div class="hero-text">
+          <h1>
+            <span>Luca</span>
+            <span class="accent">Kramberger</span>
+          </h1>
+          <p class="lead">Ich baue <strong>Apps für iOS und Android</strong>, Websites und interne Tools — und bringe Teams in einem individuellen Kurs bei, wie sie mit KI schneller entwickeln.</p>
+          <div class="actions">
+            <a href="#kontakt" class="btn btn-primary">Projekt anfragen <span aria-hidden="true">→</span></a>
+            <a href="#kurs" class="btn">KI-Kurs ansehen</a>
+          </div>
+        </div>
 
-      // Scroll reveal on sections
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("in-view");
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        {
-          threshold: 0.14,
-        }
-      );
+        <div class="portrait">
+          <figure>
+            <img src="luca.jpg" alt="Porträt von Luca Kramberger" width="1400" height="1050">
+            <figcaption><span>Luca Kramberger</span><span>Graz, AT</span></figcaption>
+          </figure>
+        </div>
+      </div>
 
-      document
-        .querySelectorAll(".reveal")
-        .forEach((el) => observer.observe(el));
+      <dl class="facts">
+        <div><dt>Fokus</dt><dd>iOS &amp; Android</dd></div>
+        <div><dt>Im Produkt seit</dt><dd>2021</dd></div>
+        <div><dt>Stundensatz</dt><dd>130 €</dd></div>
+        <div><dt>Arbeitsweise</dt><dd>Vor Ort &amp; remote</dd></div>
+      </dl>
+    </section>
 
-      // Smooth scroll navigation (sidebar)
-      const navButtons = document.querySelectorAll(".sidebar-nav-list button");
-      navButtons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const id = btn.getAttribute("data-target");
-          const target = document.getElementById(id);
-          if (target) {
-            target.scrollIntoView({ behavior: "smooth", block: "start" });
-          }
-        });
-      });
+    <section id="arbeit" class="wrap section">
+      <div class="grid section-head">
+        <span class="eyebrow">Leistungen</span>
+        <h2>Was ich für dich <em class="accent">baue</em>.</h2>
+      </div>
 
-      // Highlight active section in nav
-      const sections = document.querySelectorAll("main section[id]");
-      const setActiveNav = () => {
-        let currentId = "";
-        const scrollY = window.pageYOffset;
+      <article class="grid service">
+        <span class="eyebrow">Mobile</span>
+        <div class="service-body">
+          <h3>Apps für iOS und Android</h3>
+          <p>Eine Codebasis, zwei Stores. Von der ersten Spezifikation bis zum Release — mit Login, Bezahlung, Push-Nachrichten, Karten und dem Monitoring, das danach zeigt, ob alles läuft.</p>
+          <div class="tags">
+            <span>Flutter &amp; Dart</span><span>Supabase</span><span>Firebase</span><span>Stripe Connect</span><span>App Store &amp; Play</span>
+          </div>
+        </div>
+        <p class="price">130 €<small>pro Stunde</small></p>
+      </article>
 
-        sections.forEach((section) => {
-          const rect = section.getBoundingClientRect();
-          const offsetTop = rect.top + scrollY;
-          if (scrollY >= offsetTop - 200) {
-            currentId = section.id;
-          }
-        });
+      <article class="grid service">
+        <span class="eyebrow">Web</span>
+        <div class="service-body">
+          <h3>Websites und interne Tools</h3>
+          <p>Schnelle Websites, die am Handy genauso funktionieren wie am Schreibtisch. Dazu interne Werkzeuge, die eine konkrete Handarbeit im Unternehmen ersetzen: Dashboards, Schnittstellen, Automatisierungen.</p>
+          <div class="tags">
+            <span>Landing Pages</span><span>Dashboards</span><span>Schnittstellen</span><span>Automatisierung</span>
+          </div>
+        </div>
+        <p class="price">130 €<small>pro Stunde</small></p>
+      </article>
 
-        navButtons.forEach((btn) => {
-          btn.classList.toggle(
-            "active",
-            btn.getAttribute("data-target") === currentId
-          );
-        });
-      };
-      window.addEventListener("scroll", setActiveNav);
-      setActiveNav();
+      <article class="grid service">
+        <span class="eyebrow">Kurs</span>
+        <div class="service-body">
+          <h3>Individueller KI-Kurs</h3>
+          <p>Inhalt, Umfang und Tempo stimmen wir auf dich oder dein Team ab. Wir arbeiten an deinem Projekt, nicht an einem Beispiel aus dem Lehrbuch. Am Ende steht ein Feature, das dein Team selbst gebaut hat.</p>
+          <div class="tags">
+            <span>Umfang nach Bedarf</span><span>Einzeln oder Team</span><span>Vor Ort oder remote</span>
+          </div>
+        </div>
+        <p class="price">Auf Anfrage<small>Individuell</small></p>
+      </article>
+    </section>
 
-      // Back to top visibility + behavior
-      const backToTop = document.querySelector(".back-to-top");
-      const toggleBackToTop = () => {
-        if (window.scrollY > 320) {
-          backToTop.classList.add("visible");
-        } else {
-          backToTop.classList.remove("visible");
-        }
-      };
-      window.addEventListener("scroll", toggleBackToTop);
-      toggleBackToTop();
+    <section class="quote">
+      <div class="wrap">
+        <blockquote>Eine App ist erst fertig, wenn sie sich richtig anfühlt.</blockquote>
+        <p class="eyebrow">Luca Kramberger</p>
+      </div>
+    </section>
 
-      backToTop.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
-    </script>
-  </body>
+    <section id="kurs" class="wrap section">
+      <div class="grid section-head">
+        <span class="eyebrow">Individueller KI-Kurs</span>
+        <h2>Zugeschnitten auf <em class="accent">dein Team</em>.</h2>
+      </div>
+
+      <div class="grid course-grid">
+        <div class="course-main">
+          <p>Der Kurs ist für Entwicklerinnen, Entwickler und Teams, die KI nicht nur ausprobieren, sondern in ihren Alltag einbauen wollen. Die Themen unten sind ein Baukasten: Wir wählen aus, was zu deinem Projekt passt, und legen Umfang und Termine gemeinsam fest.</p>
+          <ol class="modules">
+            <li><span class="num">1</span><span><strong>Werkzeuge einrichten</strong><span class="desc">Claude, Claude Code und Cursor aufsetzen. Wie Modelle arbeiten, wo sie scheitern, was sie kosten.</span></span></li>
+            <li><span class="num">2</span><span><strong>Specs und Prompts</strong><span class="desc">Anforderungen so schreiben, dass eine KI sie sauber umsetzt. Projektkontext aufbauen, Ergebnisse prüfen.</span></span></li>
+            <li><span class="num">3</span><span><strong>Vom Prototyp zur App</strong><span class="desc">Cross-Platform-Grundgerüst, Screens aus der Spezifikation, Backend und Login mit Supabase.</span></span></li>
+            <li><span class="num">4</span><span><strong>KI-Funktionen einbauen</strong><span class="desc">Schnittstellen anbinden, Datenschutz und Sicherheit klären, Kosten im Griff behalten.</span></span></li>
+            <li><span class="num">5</span><span><strong>Testen und veröffentlichen</strong><span class="desc">Fehlersuche mit KI, Release im App Store, Abschlussprojekt: ein echtes Feature fertigstellen.</span></span></li>
+          </ol>
+        </div>
+
+        <aside class="offer">
+          <span class="eyebrow">Preis</span>
+          <p class="big">Auf Anfrage</p>
+          <ul>
+            <li>Themen und Umfang nach Bedarf</li>
+            <li>Angebot nach kurzem Erstgespräch</li>
+            <li>In Graz vor Ort oder remote</li>
+            <li>Kursplan vorab, auf dich zugeschnitten</li>
+            <li>Rechnung und Teilnahmebestätigung</li>
+          </ul>
+          <a href="mailto:luca.kramberger@gmail.com?subject=Anfrage%20individueller%20KI-Kurs" class="btn btn-primary">Kurs anfragen <span aria-hidden="true">→</span></a>
+        </aside>
+      </div>
+    </section>
+
+    <section id="person" class="bordered">
+      <div class="wrap section">
+        <div class="grid section-head">
+          <span class="eyebrow">Person</span>
+          <h2>Wer da <em class="accent">entwickelt</em>.</h2>
+        </div>
+
+        <div class="grid person-grid">
+          <div class="person-text">
+            <p class="intro">23 Jahre alt, seit vier Jahren in einem Produktteam — und seit 2026 selbstständig.</p>
+            <p>Ich habe an der HTL Leoben Softwareentwicklung gelernt und direkt danach bei CU Development angefangen. Dort verantworte ich die Flutter-Entwicklung einer Event-Plattform für iOS, Android und Web: Anmeldung, Zahlungen über Stripe Connect, Echtzeit-Funktionen, Karten, Push-Nachrichten — und die Koordination eines kleinen Teams.</p>
+            <p>Was ich dort gelernt habe, bringe ich in jedes Projekt mit: schnelle Übergänge, keine Wartezeit ohne Erklärung, keine Schaltfläche, die ins Leere führt. Eine App darf nicht nach Web aussehen, nur weil sie plattformübergreifend gebaut ist.</p>
+            <a href="Luca_Kramberger_CV.pdf" download="Luca_Kramberger_CV.pdf" class="btn">Lebenslauf herunterladen <span aria-hidden="true">↓</span></a>
+          </div>
+          <ul class="timeline">
+            <li><span class="when">seit 2026</span><span><strong>Selbstständig</strong><span class="what">Apps, Websites, interne Tools und KI-Kurse für Unternehmen</span></span></li>
+            <li><span class="when">seit 11/2021</span><span><strong>Projektleitung &amp; Flutter Team Lead</strong><span class="what">CU Development GmbH, Graz · Event-Plattform für iOS, Android und Web</span></span></li>
+            <li><span class="when">2017 — 2022</span><span><strong>HTL Leoben</strong><span class="what">Softwareentwicklung und Projektmanagement · Reife- und Diplomprüfung</span></span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="kontakt" class="bordered">
+      <div class="wrap section">
+        <span class="eyebrow">Kontakt</span>
+        <h2>Erzähl mir von <em class="accent">deinem Projekt</em>.</h2>
+        <p class="lead">Eine kurze Beschreibung reicht. Ich melde mich innerhalb von zwei Werktagen mit einer ehrlichen Einschätzung zu Aufwand und Zeitrahmen.</p>
+        <a href="mailto:luca.kramberger@gmail.com" class="mail">luca.kramberger@gmail.com</a>
+        <div class="links">
+          <a href="https://www.linkedin.com/in/luca-kramberger-6298b6201/" class="pill" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a>
+          <a href="Luca_Kramberger_CV.pdf" download="Luca_Kramberger_CV.pdf" class="pill">Lebenslauf (PDF) <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>© 2026 Luca Kramberger · Graz, Österreich</span>
+      <span>Preise netto</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var btn = document.querySelector(".menu-btn");
+      var nav = document.getElementById("nav");
+      function setOpen(open) {
+        nav.classList.toggle("open", open);
+        btn.setAttribute("aria-expanded", String(open));
+        btn.setAttribute("aria-label", open ? "Menü schließen" : "Menü öffnen");
+      }
+      btn.addEventListener("click", function () { setOpen(!nav.classList.contains("open")); });
+      nav.addEventListener("click", function (e) { if (e.target.closest("a")) setOpen(false); });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") setOpen(false); });
+    })();
+  </script>
+</body>
 </html>

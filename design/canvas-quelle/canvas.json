@@ -1,0 +1,40 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-11-05T10:30:00Z" },
+  "title": "Kramberger Website Design",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 1440, "h": 3200, "title": "A · Startseite Desktop", "expand": "fill" },
+    "A-Mobile.dc.html": { "x": 1520, "y": 0, "w": 390, "h": 2200, "title": "A · Mobil", "expand": "fill" },
+    "A-Stil.dc.html": { "x": 1990, "y": 0, "w": 640, "h": 900, "title": "A · Farben & Schrift" },
+    "B-Desktop.dc.html": { "x": 0, "y": 3320, "w": 1440, "h": 3400, "title": "B · Startseite Desktop", "expand": "fill" },
+    "B-Mobile.dc.html": { "x": 1520, "y": 3320, "w": 390, "h": 2200, "title": "B · Mobil", "expand": "fill" },
+    "B-Stil.dc.html": { "x": 1990, "y": 3320, "w": 640, "h": 900, "title": "B · Farben & Schrift" }
+  },
+  "order": [
+    "Main.dc.html",
+    "A-Mobile.dc.html",
+    "A-Stil.dc.html",
+    "B-Desktop.dc.html",
+    "B-Mobile.dc.html",
+    "B-Stil.dc.html"
+  ],
+  "notes": {
+    "titelA": {
+      "x": 0,
+      "y": -300,
+      "text": "Variante A — Persönlich & editorial",
+      "kind": "title1",
+      "maxW": 2630
+    },
+    "titelB": {
+      "x": 0,
+      "y": 3020,
+      "text": "Variante B — Bunt & mutig",
+      "kind": "title1",
+      "maxW": 2630
+    }
+  },
+  "designSystems": []
+}
