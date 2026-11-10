@@ -1,0 +1,52 @@
+---
+const timeline = [
+  {
+    when: "seit 2026",
+    title: "Selbstständig",
+    what: "Apps, Websites, interne Tools und KI-Kurse für Unternehmen",
+  },
+  {
+    when: "seit 11/2021",
+    title: "Projektleitung & Flutter Team Lead",
+    what: "CU Development GmbH in Graz, Event-Plattform für iOS, Android und Web",
+  },
+];
+---
+
+<section id="person" class="bordered">
+  <div class="wrap section">
+    <div class="grid section-head" data-reveal>
+      <span class="eyebrow">Person</span>
+      <h2>Wer da <em class="accent">entwickelt</em>.</h2>
+    </div>
+
+    <div class="grid person-grid">
+      <div class="person-text" data-reveal>
+        <p class="intro">Ich bin 23, baue seit 2021 Apps in einem Produktteam und bin seit 2026 auch selbstständig.</p>
+        <p>
+          Bei CU Development in Graz verantworte ich die Flutter-Entwicklung einer Event-Plattform für iOS, Android und
+          Web. Dazu gehören Anmeldung, Zahlungen über Stripe Connect, Echtzeit-Funktionen, Karten und Push-Nachrichten.
+          Außerdem koordiniere ich ein kleines Entwicklerteam.
+        </p>
+        <p>
+          Dort habe ich gelernt, worauf es bei Apps wirklich ankommt: flüssige Übergänge, keine Ladezeit ohne Erklärung
+          und kein Button, der ins Leere führt. Nur weil eine App für mehrere Plattformen gebaut ist, muss sie sich noch
+          lange nicht wie eine Website anfühlen.
+        </p>
+      </div>
+      <ul class="timeline" data-reveal style="--i: 1">
+        {
+          timeline.map((t) => (
+            <li>
+              <span class="when">{t.when}</span>
+              <span>
+                <strong>{t.title}</strong>
+                <span class="what">{t.what}</span>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,56 @@
+---
+interface Props {
+  page: "start" | "impressum" | "datenschutz";
+}
+const { page } = Astro.props;
+const links = [
+  { href: "/#arbeit", label: "Arbeit" },
+  { href: "/#kurs", label: "KI-Kurs" },
+  { href: "/#person", label: "Person" },
+  { href: "/#kontakt", label: "Kontakt", strong: true },
+];
+---
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="/" class="logo">Luca <em class="accent">Kramberger</em></a>
+    {
+      page === "start" ? (
+        <>
+          <button type="button" class="menu-btn" aria-label="Menü öffnen" aria-expanded="false" aria-controls="nav">
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+          </button>
+          <nav class="nav" id="nav" aria-label="Hauptnavigation">
+            {links.map((l) => (
+              <a href={l.href} class:list={{ strong: l.strong }}>
+                {l.label}
+              </a>
+            ))}
+          </nav>
+        </>
+      ) : (
+        <a href="/" class="back">← Zur Startseite</a>
+      )
+    }
+  </div>
+</header>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>(".menu-btn");
+  const nav = document.getElementById("nav");
+  if (btn && nav) {
+    const setOpen = (open: boolean) => {
+      nav.classList.toggle("open", open);
+      btn.setAttribute("aria-expanded", String(open));
+      btn.setAttribute("aria-label", open ? "Menü schließen" : "Menü öffnen");
+    };
+    btn.addEventListener("click", () => setOpen(!nav.classList.contains("open")));
+    nav.addEventListener("click", (e) => {
+      if ((e.target as HTMLElement).closest("a")) setOpen(false);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setOpen(false);
+    });
+  }
+</script>

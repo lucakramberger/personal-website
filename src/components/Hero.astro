@@ -1,0 +1,62 @@
+---
+import { Picture } from "astro:assets";
+import portrait from "../assets/luca.jpg";
+
+const facts = [
+  { label: "Fokus", value: "iOS & Android" },
+  { label: "Apps seit", value: "2021" },
+  { label: "Stundensatz", value: "130 €" },
+  { label: "Arbeitsweise", value: "Vor Ort & remote" },
+];
+---
+
+<section id="oben" class="wrap hero">
+  <div class="hero-top eyebrow">
+    <span>Softwareentwicklung · Graz</span>
+    <span>Selbstständig seit 2026</span>
+  </div>
+
+  <div class="grid hero-grid">
+    <div class="hero-text">
+      <h1>
+        <span class="line"><span>Luca</span></span>
+        <span class="line"><span class="accent">Kramberger</span></span>
+      </h1>
+      <p class="lead">
+        Ich baue <strong>Apps für iOS und Android</strong>, Websites und interne Tools. Und ich zeige Teams in einem
+        individuellen Kurs, wie sie mit KI schneller entwickeln.
+      </p>
+      <div class="actions">
+        <a href="#kontakt" class="btn btn-primary">Projekt anfragen <span class="arrow" aria-hidden="true">→</span></a>
+        <a href="#kurs" class="btn">Zum KI-Kurs</a>
+      </div>
+    </div>
+
+    <div class="portrait">
+      <span class="portrait-shadow" aria-hidden="true"></span>
+      <figure>
+        <Picture
+          src={portrait}
+          formats={["avif", "webp"]}
+          widths={[480, 800, 1200]}
+          sizes="(max-width: 960px) 100vw, 460px"
+          alt="Porträt von Luca Kramberger"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <figcaption><span>Luca Kramberger</span><span>Graz, AT</span></figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <dl class="facts">
+    {
+      facts.map((f) => (
+        <div>
+          <dt>{f.label}</dt>
+          <dd>{f.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>

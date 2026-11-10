@@ -1,0 +1,56 @@
+---
+const services = [
+  {
+    kind: "Mobile",
+    title: "Apps für iOS und Android",
+    text: "Eine Codebasis, beide Stores. Ich begleite dich von der ersten Idee bis zum Release und baue alles, was eine echte App braucht: Login, Bezahlung, Push-Nachrichten und Karten. Nach dem Launch sehe ich im Monitoring, ob alles rund läuft.",
+    tags: ["Flutter & Dart", "Supabase", "Firebase", "Stripe Connect", "App Store & Play"],
+    price: "130 €",
+    unit: "pro Stunde",
+  },
+  {
+    kind: "Web",
+    title: "Websites und interne Tools",
+    text: "Websites, die am Handy genauso gut funktionieren wie am Laptop. Dazu Werkzeuge für dein Unternehmen, die lästige Handarbeit übernehmen, zum Beispiel Dashboards, Schnittstellen oder Automatisierungen.",
+    tags: ["Landing Pages", "Dashboards", "Schnittstellen", "Automatisierung"],
+    price: "130 €",
+    unit: "pro Stunde",
+  },
+  {
+    kind: "Kurs",
+    title: "Individueller KI-Kurs",
+    text: "Wir schauen uns gemeinsam an, wo dein Team gerade steht, und stellen den Kurs danach zusammen. Gearbeitet wird an eurem eigenen Projekt statt an Beispielen aus dem Lehrbuch. Am Ende habt ihr ein Feature, das ihr selbst gebaut habt.",
+    tags: ["Umfang nach Bedarf", "Einzeln oder im Team", "Vor Ort oder remote"],
+    price: "Auf Anfrage",
+    unit: "Individuell",
+  },
+];
+---
+
+<section id="arbeit" class="wrap section">
+  <div class="grid section-head" data-reveal>
+    <span class="eyebrow">Leistungen</span>
+    <h2>Was ich für dich <em class="accent">baue</em>.</h2>
+  </div>
+
+  {
+    services.map((s) => (
+      <article class="grid service" data-reveal>
+        <span class="eyebrow">{s.kind}</span>
+        <div class="service-body">
+          <h3>{s.title}</h3>
+          <p>{s.text}</p>
+          <div class="tags">
+            {s.tags.map((t) => (
+              <span>{t}</span>
+            ))}
+          </div>
+        </div>
+        <p class="price">
+          {s.price}
+          <small>{s.unit}</small>
+        </p>
+      </article>
+    ))
+  }
+</section>

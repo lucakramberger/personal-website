@@ -1,0 +1,17 @@
+---
+interface Props {
+  page: "start" | "impressum" | "datenschutz";
+}
+const { page } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>© {year} Luca Kramberger · Graz, Österreich · Kleinunternehmer, keine USt.</span>
+    <nav aria-label="Rechtliches">
+      <a href="/impressum" aria-current={page === "impressum" ? "page" : undefined}>Impressum</a>
+      <a href="/datenschutz" aria-current={page === "datenschutz" ? "page" : undefined}>Datenschutz</a>
+    </nav>
+  </div>
+</footer>

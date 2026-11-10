@@ -1,0 +1,73 @@
+---
+const modules = [
+  {
+    title: "Werkzeuge einrichten",
+    text: "Claude, Claude Code und Cursor aufsetzen. Verstehen, wie die Modelle arbeiten, wo sie an ihre Grenzen kommen und was sie kosten.",
+  },
+  {
+    title: "Specs und Prompts",
+    text: "Anforderungen so formulieren, dass die KI sie sauber umsetzt. Den Projektkontext aufbauen und Ergebnisse richtig prüfen.",
+  },
+  {
+    title: "Vom Prototyp zur App",
+    text: "Ein Grundgerüst für alle Plattformen, Screens direkt aus der Spezifikation, Backend und Login mit Supabase.",
+  },
+  {
+    title: "KI-Funktionen einbauen",
+    text: "Schnittstellen anbinden, Datenschutz und Sicherheit klären und die Kosten im Blick behalten.",
+  },
+  {
+    title: "Testen und veröffentlichen",
+    text: "Fehler mit KI finden, die App in den Store bringen und zum Abschluss ein echtes Feature fertig bauen.",
+  },
+];
+
+const included = [
+  "Themen und Umfang nach Bedarf",
+  "Angebot nach einem kurzen Erstgespräch",
+  "In Graz vor Ort oder remote",
+  "Kursplan vorab, auf euch zugeschnitten",
+  "Rechnung und Teilnahmebestätigung",
+];
+---
+
+<section id="kurs" class="wrap section">
+  <div class="grid section-head" data-reveal>
+    <span class="eyebrow">Individueller KI-Kurs</span>
+    <h2>Zugeschnitten auf <em class="accent">dein Team</em>.</h2>
+  </div>
+
+  <div class="grid course-grid">
+    <div class="course-main">
+      <p data-reveal>
+        Der Kurs ist für Entwicklerinnen, Entwickler und ganze Teams, die KI nicht nur ausprobieren, sondern wirklich im
+        Alltag nutzen wollen. Die Themen unten sind ein Baukasten. Wir suchen gemeinsam aus, was zu deinem Projekt passt,
+        und legen Umfang und Termine zusammen fest.
+      </p>
+      <ol class="modules">
+        {
+          modules.map((m, i) => (
+            <li data-reveal style={`--i: ${i}`}>
+              <span class="num">{i + 1}</span>
+              <span>
+                <strong>{m.title}</strong>
+                <span class="desc">{m.text}</span>
+              </span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <aside class="offer" data-reveal style="--i: 2">
+      <span class="eyebrow">Preis</span>
+      <p class="big">Auf Anfrage</p>
+      <ul>
+        {included.map((item) => <li>{item}</li>)}
+      </ul>
+      <a href="mailto:luca.kramberger@gmail.com?subject=Anfrage%20individueller%20KI-Kurs" class="btn btn-primary">
+        Kurs anfragen <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </aside>
+  </div>
+</section>

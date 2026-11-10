@@ -1,0 +1,61 @@
+---
+import Base from "../layouts/Base.astro";
+
+const facts = [
+  { label: "Name", value: "Luca Kramberger" },
+  {
+    label: "Unternehmensgegenstand",
+    value: "Softwareentwicklung: Apps, Websites und interne Tools sowie Schulungen zum Einsatz von KI in der Entwicklung",
+  },
+  { label: "Rechtsform", value: "Einzelunternehmen, nicht im Firmenbuch eingetragen" },
+  { label: "Gewerbe", value: "Dienstleistungen in der automatischen Datenverarbeitung und Informationstechnik" },
+  { label: "Gewerbebehörde", value: "Magistrat Graz" },
+  {
+    label: "Kammer",
+    value: "Mitglied der Wirtschaftskammer Steiermark, Fachgruppe Unternehmensberatung, Buchhaltung und Informationstechnologie (UBIT)",
+  },
+  { label: "Umsatzsteuer", value: "Kleinunternehmer gemäß § 6 Abs. 1 Z 27 UStG. Es wird keine Umsatzsteuer verrechnet." },
+];
+---
+
+<Base title="Impressum · Luca Kramberger" page="impressum" noindex>
+  <main class="wrap legal">
+    <div class="legal-inner">
+      <span class="eyebrow">Rechtliches</span>
+      <h1>Impressum</h1>
+
+      <p>Informationen nach § 5 E-Commerce-Gesetz und § 63 Gewerbeordnung sowie Offenlegung nach § 25 Mediengesetz.</p>
+
+      <dl class="legal-facts">
+        <div><dt>Name</dt><dd>{facts[0].value}</dd></div>
+        <div><dt>Anschrift</dt><dd>Krausgasse 4<br />8020 Graz<br />Österreich</dd></div>
+        <div><dt>E-Mail</dt><dd><a href="mailto:luca.kramberger@gmail.com">luca.kramberger@gmail.com</a></dd></div>
+        {
+          facts.slice(1).map((f) => (
+            <div>
+              <dt>{f.label}</dt>
+              <dd>{f.value}</dd>
+            </div>
+          ))
+        }
+        <div>
+          <dt>Rechtsvorschriften</dt>
+          <dd>Gewerbeordnung, abrufbar unter <a href="https://www.ris.bka.gv.at" target="_blank" rel="noopener">www.ris.bka.gv.at</a></dd>
+        </div>
+      </dl>
+
+      <h2>Offenlegung nach § 25 Mediengesetz</h2>
+      <p><strong>Medieninhaber:</strong> Luca Kramberger, Krausgasse 4, 8020 Graz.</p>
+      <p><strong>Grundlegende Richtung:</strong> Information über die Leistungen von Luca Kramberger in der Softwareentwicklung und über seine KI-Kurse.</p>
+
+      <h2>Haftung für Links</h2>
+      <p>
+        Auf dieser Website gibt es Links zu anderen Seiten, etwa zu LinkedIn. Für deren Inhalte sind allein die
+        jeweiligen Betreiber verantwortlich. Sollte ich erfahren, dass eine verlinkte Seite rechtswidrige Inhalte enthält,
+        entferne ich den Link sofort.
+      </p>
+
+      <p class="stand">Stand: November 2026</p>
+    </div>
+  </main>
+</Base>

@@ -1,0 +1,70 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  page?: "start" | "impressum" | "datenschutz";
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = "Luca Kramberger, Softwareentwickler aus Graz. Apps für iOS und Android, Websites, interne Tools und individuelle KI-Kurse für Teams.",
+  page = "start",
+  noindex = false,
+} = Astro.props;
+
+const ogImage = new URL("/og.jpg", Astro.site);
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={ogImage} />
+    <link rel="preload" href="/fonts/fraunces-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/figtree-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <script is:inline>
+      // Scroll-Animationen nur aktivieren, wenn JavaScript läuft und keine reduzierte Bewegung gewünscht ist.
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("reveal-ready");
+      }
+    </script>
+  </head>
+  <body>
+    <Header page={page} />
+    <slot />
+    <Footer page={page} />
+
+    <script>
+      const items = document.querySelectorAll<HTMLElement>("[data-reveal]");
+      if (document.documentElement.classList.contains("reveal-ready") && "IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: "0px 0px -8% 0px", threshold: 0.1 }
+        );
+        items.forEach((el) => observer.observe(el));
+      } else {
+        items.forEach((el) => el.classList.add("is-visible"));
+      }
+    </script>
+  </body>
+</html>
